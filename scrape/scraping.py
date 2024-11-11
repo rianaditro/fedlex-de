@@ -10,8 +10,18 @@ class WebScraper:
   """Orchestrates the entire scraping process."""
   def __init__(self, url):
     self.url = url
+    """
+    use self.driver if it is a driver instance 
+    use self.driver_setup if it is a DriverSetup instance
+    """
     self.driver_setup = DriverSetup().driver
     self.wait = WaitDriver(self.driver_setup).wait
+
+    """
+    please note that self.wait will create a WaitDriver instance,
+    and self.button_clicker will create a second WaitDriver instance inside ButtonClicker.
+    no revision needed.   
+    """
     self.button_clicker = ButtonClicker(self.driver_setup)
 
   def scrape(self, max_main_buttons=3):
