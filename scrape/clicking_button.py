@@ -1,4 +1,5 @@
 import time
+import os
 
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
@@ -60,8 +61,16 @@ class ButtonClicker:
         download_button = self.wait.until(EC.presence_of_element_located
                                           ((By.XPATH, xpath)))  # Wait for download button
         download_button.click()
-        time.sleep(5)  # Wait until download is complete
+        # time.sleep(5)  # Wait until download is complete
         print("File download triggered.")
+
+        download_dir = os.path.join(os.getcwd(), "downloads")
+
+        while any(file.endswith('.crdownload') for file in os.listdir(download_dir)):
+          time.sleep(1)
+          print("Download in progress...")
+
+        print("Download complete.")
 
         # Navigate back to the sub-page
         self.driver_setup.back()
